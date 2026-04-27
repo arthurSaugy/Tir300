@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    {% set site_url = "https://www.tir300villeneuvefr.ch" %}
+    {% set canonical_url = site_url ~ request.path %}
+    {% set social_image = site_url ~ url_for('static', filename='assets/img/logo.jpeg') %}
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <title>{% block title %}Tir300 - Villeneuve{% endblock %}</title>
+    <link rel="canonical" href="{{ canonical_url }}" />
+    <meta name="robots" content="index, follow" />
+
+    {% block meta %}
+    <meta
+      name="description"
+      content="Bienvenue sur le site officiel du Stand de tir 300 mètres de Villeneuve (FR). Vous y trouverez l'agenda des séances, les résultats des compétitions, les photos, et toutes les informations utiles sur notre stand et nos activités sportives."
+    />
+    {% endblock %}
+
+    <style>
+      body.loading {
+        background-color: #3a5a40 !important;
+        background-image: none !important;
+        color: white;
+        opacity: 0;
+      }
+    </style>
+
+    <!-- Couleur barre en bas -->
+    <meta name="theme-color" content="#e9e5d9" />
+
+    <!-- PWA -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Stand de tir 300m Villeneuve FR" />
+    <meta
+      property="og:description"
+      content="Site officiel du stand de tir 300m à Villeneuve (Fribourg). Agenda, résultats, galerie et plus."
+    />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Stand de tir 300m Villeneuve FR" />
+    <meta property="og:locale" content="fr_CH" />
+    <meta
+      property="og:image"
+      content="{{ social_image }}"
+    />
+    <meta
+      property="og:image:alt"
+      content="Logo du stand de tir 300m de Villeneuve FR"
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Stand de tir 300m Villeneuve FR" />
+    <meta
+      name="twitter:description"
+      content="Site officiel du stand de tir 300m à Villeneuve (FR). Consultez les dates, événements, résultats, photos."
+    />
+    <meta
+      name="twitter:image"
+      content="{{ social_image }}"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Logo du stand de tir 300m de Villeneuve FR"
+    />
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link rel="stylesheet" href="../static/css/curseur.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      type="image/jpeg"
+      href="{{ url_for('static', filename='assets/img/logo.jpeg') }}"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Stand de tir 300m Villeneuve FR",
+        "url": "https://www.tir300villeneuvefr.ch/",
+        "logo": "{{ social_image }}",
+        "email": "mailto:mottets.tirvilleneuve@hotmail.com",
+        "telephone": "+41 79 381 03 20",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Route de Lucens 178A",
+          "postalCode": "1527",
+          "addressLocality": "Villeneuve",
+          "addressCountry": "CH"
+        }
+      }
+    </script>
+
+    {% block head %}{% endblock %}
+
+    <script>
+      document.documentElement.classList.remove("no-js");
+      window.addEventListener("load", () => {
+        document.body.classList.add("loaded");
+        document.body.classList.remove("loading");
+      });
+    </script>
+  </head>
+  <body class="loading">
+    <div id="circle-transition"></div>
+    <div id="rotate-warning">
+      <p>🔄 Tourne ton téléphone en mode portrait</p>
+    </div>
+    <header class="protect" id="head_href">
+      <div class="logo_texte">
+        <div class="logo">
+          v
+          <!--           <img src="../static/assets/img/logo.jpeg" alt="" />-->
+        </div>
+        <h1>
+          Tir 300
+          <span class="villeneuve">Villeneuve FR</span>
+        </h1>
+      </div>
+
+      <nav>
+        <div class="nav-links desktop-menu" id="navLinks">
+          <ul>
+            <li>
+              <a
+                href="{{ url_for('home') }}"
+                class="{% if request.endpoint == 'home' %}active{% endif %}"
+                data-text="Accueil"
+                >Accueil</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('evenements') }}"
+                class="{% if request.endpoint == 'evenements' %}active{% endif %}"
+                data-text="Événements"
+                >Événements</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('agenda') }}"
+                class="{% if request.endpoint == 'agenda' %}active{% endif %}"
+                data-text="Agenda"
+              >
+                Agenda</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('resultats') }}"
+                class="{% if request.endpoint == 'resultats' %}active{% endif %}"
+                data-text="Résultats"
+                >Résultats</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('galerie') }}"
+                class="{% if request.endpoint == 'galerie' %}active{% endif %}"
+                data-text="Galerie"
+                >Galerie</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('admin_login') }}"
+                class="{% if request.endpoint == 'admin_login' %}active{% endif %}"
+                data-text="Admin"
+                >Admin</a
+              >
+            </li>
+          </ul>
+          <div class="nav-underline"></div>
+        </div>
+      </nav>
+
+      <!-- Burger button -->
+      <button class="burger" id="burgerMenu" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Fullscreen menu overlay -->
+      <div class="menu-overlay" id="menuOverlay">
+        <ul class="menu-links">
+          <li><a href="{{ url_for('home') }}">Accueil</a></li>
+          <li><a href="{{ url_for('evenements') }}">Événements</a></li>
+          <li><a href="{{ url_for('agenda') }}">Agenda</a></li>
+          <li><a href="{{ url_for('resultats') }}">Résultats</a></li>
+          <li><a href="{{ url_for('galerie') }}">Galerie</a></li>
+          <li><a href="{{ url_for('admin_login') }}">Admin</a></li>
+        </ul>
+      </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <!--     <img class="protect" id="mail" src="../static/assets/svg/post.svg" alt="" />-->
+    <footer class="fond-vert">
+      <h2>Contact</h2>
+      <div class="box_foot">
+        <ul class="liste1">
+          <li>Présidence</li>
+          <hr id="hr1" />
+          <li>Sophie Mottet</li>
+          <li>
+            <a class="footer_links phone" href="tel:+41793810320"
+              >+41 79 381 03 20
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="mini_fleche"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m19.5 4.5-15 15m0 0h11.25m-11.25 0V8.25"
+                />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              class="footer_links email"
+              href="mailto:mottets.tirvilleneuve@hotmail.com"
+              >mottets.tirvilleneuve@hotmail.com
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="mini_fleche"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m19.5 4.5-15 15m0 0h11.25m-11.25 0V8.25"
+                />
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <ul class="liste2">
+          <li>Lieu</li>
+          <hr id="hr2" />
+          <li>Stand De Tir 300m</li>
+          <li>Route de Lucens 178A</li>
+          <li>1527 Villeneuve</li>
+        </ul>
+      </div>
+      <img
+        class="protect"
+        id="fleche"
+        src="../static/assets/svg/fleche_coeur.svg"
+        alt=""
+      />
+      <h4 class="protect">Contact</h4>
+    </footer>
+
+    <!-- Custom cursor -->
+    <svg
+      class="custom-cursor protect"
+      id="customCursor"
+      width="32"
+      height="32"
+      viewBox="0 0 8.4666665 8.4666666"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M 5.3433302,2.4416882 C 5.6764378,2.6022259 6.168141,2.5849281 6.5256162,2.5575517 6.6338359,2.5491038 7.169634,2.4813793 6.8469809,2.3258318 5.1920916,1.5283299 3.501393,0.83306046 1.7642135,0.23525728 1.5962937,0.17737224 0.13909374,-0.04981032 0.1462888,0.25556319 0.20004557,2.5280998 0.25381334,4.8006437 0.307789,7.0734231 0.31493897,7.3708846 2.0456934,7.3816586 2.0400098,7.1487068 2.0050299,5.6738914 1.9700171,4.1995358 1.9352462,2.7249514 4.2020718,5.4485342 4.4432681,5.7131903 6.7681395,8.3878389 6.9817214,8.633729 8.3604405,7.7163023 8.3725451,7.7306615 5.8521319,4.8311411 5.420041,4.3368611 2.9677735,1.3794835 3.7681394,1.7115383 4.5601842,2.064357 5.3433619,2.4417115 Z"
+        style="fill-opacity: 1"
+      />
+    </svg>
+
+    <!-- Bouton de changement de curseur -->
+    <button
+      id="cursorToggle"
+      class="cursor-toggle protect"
+      aria-label="Changer de curseur"
+      data-aos="fade-up-left"
+    >
+      <img
+        class="protect"
+        id="cursorToggleIcon"
+        src="{{ url_for('static', filename='assets/img/default_cursor.webp') }}"
+        alt="Curseur"
+      />
+    </button>
+
+    <!-- GSAP et JS preloading -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <script src="{{ url_for('static', filename='js/loading.js') }}" defer></script>
+
+  </body>
+  {% block scripts %}{% endblock %}
+  <script src="../static/js/burger-menu.js" defer></script>
+  <script>
+    if (window.matchMedia("(min-width: 901px)").matches) {
+      const script = document.createElement("script");
+      script.src = "../static/js/animation_links.js";
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  <script>
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+  </script>
+
+  <script src="../static/js/curseur.js" defer></script>
+</html>

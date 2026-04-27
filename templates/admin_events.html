@@ -1,0 +1,85 @@
+{% extends 'admin_base.html' %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/event.css') }}"
+/>
+{% endblock %} {% block content %}
+<main>
+  <div class="boxs">
+    <!-- Box 1 -->
+    <div class="box1 box box_adm" onclick="openModal('modalFlyer1')">
+      {% if flyer1 %}
+      <img
+        src="{{ url_for('static', filename='event_images/' + flyer1.filename) }}"
+        alt="Flyer 1"
+      />
+      {% else %}
+      <p>Aucun flyer disponible</p>
+      {% endif %}
+    </div>
+
+    <!-- Box 2 -->
+    <div class="box2 box box_adm" onclick="openModal('modalFlyer2')">
+      {% if flyer2 %}
+      <img
+        src="{{ url_for('static', filename='event_images/' + flyer2.filename) }}"
+        alt="Flyer 2"
+      />
+      {% else %}
+      <img
+        src="{{ url_for('static', filename='event_images/default_placeholder.jpg') }}"
+        alt="Placeholder"
+      />
+      {% endif %}
+    </div>
+
+    <!-- Box 3 -->
+    <div class="box3 box">
+      <h3>Gestion des flyers événementiels</h3>
+    </div>
+  </div>
+</main>
+
+<!-- Modal Flyer 1 -->
+<div class="modal-backdrop" id="modalFlyer1">
+  <div class="modal-content">
+    <form method="POST" enctype="multipart/form-data" autocomplete="off">
+      <input
+        type="file"
+        name="flyer1_file"
+        id="flyer1_file"
+        class="input-file"
+        required
+      />
+      <label for="flyer1_file" class="custom-file-label"
+        >Choisir un flyer</label
+      >
+      <span id="filename1">Aucun fichier choisi</span>
+      <button type="submit">Mettre à jour</button>
+    </form>
+    <span class="modal-close" onclick="closeModal('modalFlyer1')">&times;</span>
+  </div>
+</div>
+
+<!-- Modal Flyer 2 -->
+<div class="modal-backdrop" id="modalFlyer2">
+  <div class="modal-content">
+    <form method="POST" enctype="multipart/form-data" autocomplete="off">
+      <input
+        type="file"
+        name="flyer2_file"
+        id="flyer2_file"
+        class="input-file"
+      />
+      <label for="flyer2_file" class="custom-file-label"
+        >Choisir un flyer</label
+      >
+      <span id="filename2">Aucun fichier choisi</span>
+      <button type="submit">Mettre à jour</button>
+    </form>
+    <span class="modal-close" onclick="closeModal('modalFlyer2')">&times;</span>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="../static/js/event.js"></script>
+{% endblock %}

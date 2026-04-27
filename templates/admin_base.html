@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>{% block title %}Admin - Tir300 - Villeneuve{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/curseur.css" />
+    <link rel="stylesheet" href="../static/css/admin.css" />
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <header class="protect">
+      <div class="logo_texte">
+        <h1>Admin</h1>
+      </div>
+      <nav>
+        <div class="nav-links desktop-menu" id="navLinks">
+          <ul>
+            <li>
+              <a
+                href="{{ url_for('admin_events') }}"
+                class="{% if request.endpoint == 'evenements' %}active{% endif %}"
+                data-text="Événements"
+                >Événements</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('admin_agenda') }}"
+                class="{% if request.endpoint == 'agenda' %}active{% endif %}"
+                data-text="Agenda"
+              >
+                Agenda</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('admin_resultats') }}"
+                class="{% if request.endpoint == 'resultats' %}active{% endif %}"
+                data-text="Résultats"
+                >Résultats</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('admin_galerie') }}"
+                class="{% if request.endpoint == 'galerie' %}active{% endif %}"
+                data-text="Galerie"
+                >Galerie</a
+              >
+            </li>
+            <li>
+              <a
+                href="{{ url_for('admin_logout') }}"
+                class="deconnexion {% if request.endpoint == 'admin_login' %}active{% endif %}"
+                data-text="Deconnexion"
+                >Deconnexion</a
+              >
+            </li>
+          </ul>
+          <div class="nav-underline"></div>
+        </div>
+      </nav>
+
+      <button class="burger" id="burgerMenu" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Fullscreen menu overlay -->
+      <div class="menu-overlay" id="menuOverlay">
+        <ul class="menu-links">
+          <li><a href="{{ url_for('admin_events') }}">Événements</a></li>
+          <li><a href="{{ url_for('admin_agenda') }}">Agenda</a></li>
+          <li><a href="{{ url_for('admin_resultats') }}">Résultats</a></li>
+          <li><a href="{{ url_for('admin_galerie') }}">Galerie</a></li>
+          <li><a href="{{ url_for('admin_logout') }}">Logout</a></li>
+        </ul>
+      </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <!-- MODALE SUPPRESSION GLOBALE -->
+    <div id="deleteModal" class="modal-overlay">
+      <div class="modal-form">
+        <button id="closeDeleteModal" class="close-btn">✕</button>
+        <h3>Confirmer la suppression</h3>
+        <p>Êtes-vous sûr ? Cette action est irréversible.</p>
+        <div>
+          <button id="confirmDeleteBtn">Supprimer</button>
+          <button id="cancelDeleteBtn">Annuler</button>
+        </div>
+      </div>
+    </div>
+
+    <img
+      src="{{ url_for('static', filename='assets/svg/curseur.svg') }}"
+      class="custom-cursor protect"
+      id="customCursor"
+    />
+    <button
+      id="cursorToggle"
+      class="cursor-toggle protect"
+      aria-label="Changer de curseur"
+    >
+      <img
+        class="protect"
+        id="cursorToggleIcon"
+        src="{{ url_for('static', filename='assets/img/default_cursor.webp') }}"
+        alt="Curseur"
+      />
+    </button>
+    {% block scripts %}{% endblock %}
+  </body>
+  <script src="../static/js/burger-menu.js" defer></script>
+  <script>
+    if (window.matchMedia("(min-width: 901px)").matches) {
+      const script = document.createElement("script");
+      script.src = "../static/js/animation_links.js";
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  <script src="../static/js/alert_modal.js"></script>
+  <script>
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+  </script>
+  <script src="../static/js/curseur.js"></script>
+</html>

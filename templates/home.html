@@ -1,0 +1,293 @@
+{% extends 'base.html' %} {% block title %}Home - Tir300 - Villeneuve{% endblock
+%} {% block head %}
+<link rel="stylesheet" href="../static/css/index.css" />
+<meta
+  name="google-site-verification"
+  content="JDx17cNr1pwO6-VxPJpDBI72TZWG7qrjTGW8DBHhbAM"
+/>
+{% endblock %} {% block meta %}
+<meta
+  name="description"
+  content="Site officiel du stand de tir 300 mètres de Villeneuve (Fribourg). Informations, agenda, résultats, galerie et événements à jour."
+/>
+{% endblock %}{% block content %}
+<main>
+  <div class="page1">
+    <div class="ligne1">
+      <ul class="hero_list">
+        <span id="trad"></span>
+        <li>Tradition.</li>
+        <li>Discipline.</li>
+        <li>Convivialité.</li>
+      </ul>
+
+      <div class="join">
+        <h4>Envie de nous rejoindre ?</h4>
+        <button href="#contact" class="protect join-button">
+          <span id="contact">Contact</span> <span id="right">></span>
+        </button>
+        <img
+          class="protect"
+          id="fleche_arriere"
+          src="../static/assets/svg/fleche_arriere.svg"
+          alt=""
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <div class="boxs protect">
+      <a class="box box1" href="{{ url_for('evenements') }}">
+        <h2>Événements</h2>
+        <div class="images">
+          <img
+            class="wave"
+            src="../static/assets/svg/wave_box.svg"
+            alt=""
+            decoding="async"
+          />
+          <img
+            class="photo"
+            src="{{ url_for('static', filename='assets/img/tir3_cut-home.webp') }}"
+            decoding="async"
+            alt="Entrainement de tir lors des sessions d'été"
+          />
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2.5"
+          stroke="green"
+          class="fleche1 box_right"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+      </a>
+
+      <a class="box box2" href="{{ url_for('agenda') }}">
+        <h2>Agenda</h2>
+        <div class="images">
+          <img
+            class="wave"
+            src="../static/assets/svg/wave_box2.svg"
+            alt=""
+            decoding="async"
+          />
+          <img
+            class="photo"
+            src="{{ url_for('static', filename='assets/img/repas_dehors-home.webp') }}"
+            decoding="async"
+            alt="Repas de toute l'équipe lors des entrainements saisonniers"
+          />
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2.5"
+          stroke="green"
+          class="fleche2 box_right"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+      </a>
+
+      <a class="box box3" href="{{ url_for('resultats') }}">
+        <h2>Résultats</h2>
+        <div class="images">
+          <img
+            class="wave"
+            src="../static/assets/svg/wave_box3.svg"
+            alt=""
+            decoding="async"
+          />
+          <img
+            class="photo"
+            src="{{ url_for('static', filename='assets/img/tir1-home.webp') }}"
+            decoding="async"
+            alt="Tir compétitif avec mousqueton"
+          />
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2.5"
+          stroke="green"
+          class="fleche3 box_right"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="page2">
+    <div class="img1" id="img1_href">
+      <div
+        class="texte_img fond-vert"
+        data-aos="fade-up-right"
+        data-aos-offset="200"
+      >
+        <div class="h3_devant">
+          <h3>Qui sommes nous ?</h3>
+        </div>
+        <p id="paragraphe">
+          La société de tir 300 mètres de
+          <em>Villeneuve-Surpierre-Praratoud</em> allie
+          <strong>tradition</strong>, <strong>discipline</strong> et
+          <strong>convivialité</strong>. <br /><br />
+          Active depuis plusieurs décennies, elle rassemble des
+          <strong>passionnés</strong> de <strong>tous âges</strong> autour
+          d'entraînements, tirs officiels et concours. <br /><br />
+          Chaque rencontre est l'occasion de <strong>progresser</strong> et de
+          <strong>renforcer</strong> les <strong>liens</strong>.
+        </p>
+      </div>
+      <img
+        class="protect"
+        id="fleche_qui"
+        src="../static/assets/svg/fleche_droite.svg"
+        alt=""
+        loading="lazy"
+      />
+      <img
+        class="protect"
+        src="{{ url_for('static', filename='assets/img/repas_dedans_cut-home.webp') }}"
+        alt="Les membres de l'équipe du stand de tir 300m de Villeneuve réunis autour d'une table pendant un repas convivial"
+        id="img1"
+        loading="lazy"
+        decoding="async"
+        data-aos="fade-up-left"
+        data-aos-delay="200"
+        data-aos-offset="200"
+      />
+
+      <!-- map en mobile -->
+      <div
+        class="map-mobile-placeholder"
+        data-aos="fade-up"
+        data-aos-offset="200"
+      ></div>
+    </div>
+  </div>
+
+  <div class="page3" id="map-section">
+    <h2 data-aos="fade-up">Comment nous trouver ?</h2>
+    <div class="map-shadow-wrapper protect" data-aos="fade-up">
+      <div class="animated-border">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Scroll hint -->
+<div id="scrollHint">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="size-6"
+    href="#img1_href"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+    />
+  </svg>
+</div>
+
+<!-- Bouton pour revenir en haut de la page -->
+<div class="top_page_wrapper">
+  <a
+    class="top_page protect"
+    aria-label="Monter en haut de page"
+    data-aos="fade-up-right"
+    href="#head_href"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="#0000004d"
+      id="top_page"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m15 11.25-3-3m0 0-3 3m3-3v7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      />
+    </svg>
+  </a>
+</div>
+
+{% endblock %} {% block scripts %}
+
+<script>
+    const lat = {{ lat | default(46.73628887245213) }};
+    const lng = {{ lng | default(6.862805375176529) }};
+    window.mapScriptUrl = "{{ url_for('static', filename='js/map.js') }}";
+
+    document.querySelector('.join-button').addEventListener('click', () => {
+    window.scrollTo({
+      top: document.body.offsetHeight,
+      behavior: 'smooth'
+    });
+  });
+</script>
+<script>
+  function handleScroll() {
+    const hint = document.getElementById("scrollHint");
+
+    if (!hint) return;
+
+    if (window.scrollY > 20) {
+      hint.style.opacity = "0";
+      hint.style.pointerEvents = "none";
+      window.removeEventListener("scroll", handleScroll); // désactive l’événement
+    }
+  }
+
+  window.addEventListener("scroll", handleScroll);
+</script>
+<script>
+  if (
+    window.matchMedia("(min-width: 901px)").matches &&
+    window.matchMedia("(prefers-reduced-motion: no-preference)").matches
+  ) {
+    const aosStyles = document.createElement("link");
+    aosStyles.rel = "stylesheet";
+    aosStyles.href = "https://unpkg.com/aos@2.3.1/dist/aos.css";
+    document.head.appendChild(aosStyles);
+
+    const aosScript = document.createElement("script");
+    aosScript.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+    aosScript.defer = true;
+    aosScript.onload = () => {
+      if (window.AOS) {
+        window.AOS.init();
+      }
+    };
+    document.body.appendChild(aosScript);
+  }
+</script>
+<script src="{{ url_for('static', filename='js/map-loader.js') }}" defer></script>
+{% endblock %}

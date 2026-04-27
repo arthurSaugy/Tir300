@@ -1,0 +1,164 @@
+{% extends 'admin_base.html' %} {% block title %}Admin Agenda{% endblock %} {%
+block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/agenda.css') }}"
+/>
+{% endblock %} {% block content %}
+<main>
+  <div class="texte_agenda">
+    <div>
+      <h1>Agenda - Admin</h1>
+      <p>
+        Ici, <strong>ajoutez</strong>, <strong>modifiez</strong> ou
+        <strong>supprimez</strong> des RDV.
+      </p>
+
+      <!-- Messages flash -->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div id="flash_messages" style="margin-top: 10px">
+        {% for category, message in messages %}
+        <p
+          class="flash {{ category }}"
+          style="color: {% if category == 'danger' %}red{% elif category == 'success' %}green{% elif category == 'info' %}green{% else %}black{% endif %}; font-weight: 600; font-size: 1rem;"
+        >
+          {{ message }}
+        </p>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+    </div>
+    <div>
+      <p id="texte_bas_agenda">
+        Pour <strong>modifier</strong> ou <strong>supprimer</strong> un
+        rendez-vous existant, cliquez simplement sur l'événement dans la liste.
+        <br /><br />
+        Pour <strong>ajouter</strong> un nouveau rendez-vous cliquez ici.
+      </p>
+      <div class="add-rdv-btn" id="openRdvPopup">+ Ajouter Rdv</div>
+    </div>
+  </div>
+
+  <!-- Liste des RDV -->
+  <ul class="agenda-list">
+    {% for item in agenda_entries %}
+    <li
+      class="agenda-item clickable"
+      data-id="{{ item.id }}"
+      data-date="{{ item.date }}"
+      data-debut="{{ item.heure_debut.strftime('%H:%M') }}"
+      data-fin="{{ item.heure_fin.strftime('%H:%M') }}"
+      data-desc="{{ item.description }}"
+      data-end="{{ item.date.isoformat() }}T{{ item.heure_fin.strftime('%H:%M') }}"
+    >
+      <div class="jour">{{ item.date.strftime('%A') }}</div>
+      <div class="date">{{ item.date.strftime('%d.%m') }}</div>
+      <div class="desc">{{ item.description }}</div>
+      <div class="heure">
+        {{ item.heure_debut.strftime('%Hh%M') }} à {{
+        item.heure_fin.strftime('%Hh%M') }}
+      </div>
+    </li>
+    {% else %}
+    <li class="agenda-item aucun">Aucun événement prévu</li>
+    {% endfor %}
+  </ul>
+
+  <div class="btn_mobile">
+    <div class="add-rdv-btn openRdvPopup">+ Ajouter Rdv</div>
+  </div>
+
+  <!-- Pop-up Ajout RDV -->
+  <div class="popup-backdrop" id="popupBackdrop">
+    <div class="popup">
+      <h3>Ajouter un RDV</h3>
+      <form
+        method="POST"
+        action="{{ url_for('admin_agenda_add') }}"
+        autocomplete="off"
+      >
+        {{ form.hidden_tag() }} {{ form.id(value="") }}
+        <!-- id vide pour ajout -->
+        <label for="date">{{ form.date.label }}</label>
+        {{ form.date(class="form-control") }}
+        <label for="debut">{{ form.debut.label }}</label>
+        {{ form.debut(class="form-control") }}
+        <label for="fin">{{ form.fin.label }}</label>
+        {{ form.fin(class="form-control") }}
+        <label for="description">{{ form.description.label }}</label>
+        {{ form.description(class="form-control") }}
+        <button type="submit">{{ form.submit.label.text }}</button>
+        <button type="button" id="closeRdvPopup">Annuler</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pop-up Édition RDV -->
+  <div class="popup-backdrop" id="popupEditBackdrop">
+    <div class="popup">
+      <h3>Modifier le RDV</h3>
+      <form
+        method="POST"
+        action="{{ url_for('admin_agenda_edit', id=0) }}"
+        autocomplete="off"
+        id="editRdvForm"
+      >
+        {{ form.hidden_tag() }} {{ form.id(id="edit_id") }}
+        <label for="edit_date">{{ form.date.label }}</label>
+        {{ form.date(class="form-control", id="edit_date") }}
+        <label for="edit_debut">{{ form.debut.label }}</label>
+        {{ form.debut(class="form-control", id="edit_debut") }}
+        <label for="edit_fin">{{ form.fin.label }}</label>
+        {{ form.fin(class="form-control", id="edit_fin") }}
+        <label for="edit_description">{{ form.description.label }}</label>
+        {{ form.description(class="form-control", id="edit_description") }}
+        <button type="submit">{{ form.submit.label.text }}</button>
+      </form>
+      <form
+        method="POST"
+        action=""
+        class="delete-resultat-form"
+        id="deleteForm"
+      >
+        {{ form.csrf_token }}
+        <button type="submit" class="danger delete-btn">Supprimer</button>
+      </form>
+
+      <button type="button" id="closeEditPopup">Annuler</button>
+    </div>
+  </div>
+</main>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='js/agenda.js') }}"></script>
+<script>
+  // Met à jour dynamiquement les actions des formulaires édition / suppression quand on ouvre popup édition
+  document.querySelectorAll(".agenda-item.clickable").forEach((item) => {
+    item.addEventListener("click", () => {
+      const id = item.getAttribute("data-id");
+      const date = item.getAttribute("data-date");
+      const debut = item.getAttribute("data-debut");
+      const fin = item.getAttribute("data-fin");
+      const desc = item.getAttribute("data-desc");
+
+      // Remplit le formulaire édition
+      document.getElementById("edit_id").value = id;
+      document.getElementById("edit_date").value = date;
+      document.getElementById("edit_debut").value = debut;
+      document.getElementById("edit_fin").value = fin;
+      document.getElementById("edit_description").value = desc;
+
+      // Met à jour l'URL d'action du formulaire édition avec le bon ID
+      const editForm = document.getElementById("editRdvForm");
+      editForm.action = `/admin/agenda/edit/${id}`;
+
+      // Met à jour l'URL d'action du formulaire suppression avec le bon ID
+      const deleteForm = document.getElementById("deleteForm");
+      deleteForm.action = `/admin/agenda/delete/${id}`;
+
+      // Affiche le popup édition
+      document.getElementById("popupEditBackdrop").style.display = "flex";
+    });
+  });
+</script>
+{% endblock %}

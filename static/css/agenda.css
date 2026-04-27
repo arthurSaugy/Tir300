@@ -1,0 +1,354 @@
+main {
+  margin: 14vh 3% 0 3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.texte_agenda {
+  height: 73vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 40vw;
+}
+
+.texte_agenda h1 {
+  font-size: 4rem;
+  margin: 0;
+}
+
+.texte_agenda p {
+  font-size: 2.5rem;
+  margin: 15px 0 0 0;
+  font-weight: 400;
+}
+
+#prochains {
+  font-size: 2.4rem;
+}
+
+#rdv {
+  background: linear-gradient(
+    to bottom right,
+    rgba(58, 90, 64, 0.4) 0%,
+    rgba(58, 90, 64, 0.4) 25%,
+    rgba(88, 129, 87, 0.4) 50%,
+    rgba(58, 90, 64, 0.4) 75%,
+    rgba(58, 90, 64, 0.4) 100%
+  );
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-weight: 600;
+}
+
+#fleche_agenda {
+  height: 160px;
+  position: absolute;
+  left: 25vw;
+  top: 33vh;
+  rotate: 5deg;
+}
+
+#texte_bas_agenda {
+  font-size: 1.3rem;
+  max-width: 90%;
+}
+
+#texte_bienvenue {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Scrollbar visible au hover */
+.agenda-list {
+  height: 72vh;
+  width: 65%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--det3) transparent;
+  overflow-x: hidden;
+  border-top: 5px solid rgba(122, 122, 122, 0.9);
+  border-bottom: 5px solid rgba(122, 122, 122, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.agenda-list::-webkit-scrollbar {
+  width: 12px; /* largeur de la scrollbar sous Chrome, Edge, Safari */
+}
+
+.agenda-list::-webkit-scrollbar-thumb {
+  background-color: var(--det3);
+  border-radius: 10px;
+  border: 3px solid transparent; /* espace autour du pouce pour un effet */
+  background-clip: content-box; /* pour que la bordure soit prise en compte */
+}
+
+.agenda-list::-webkit-scrollbar-track {
+  background: transparent; /* piste (fond) */
+}
+
+/* Firefox */
+.agenda-list {
+  scrollbar-width: thin; /* valeurs possibles: auto, thin, none */
+  scrollbar-color: var(--det3) transparent; /* couleur du pouce et piste */
+}
+
+/* Pour élargir sous Firefox (pas direct, on peut changer 'auto' au lieu de 'thin') */
+.agenda-list {
+  scrollbar-width: auto; /* auto est plus large que thin */
+}
+
+.agenda-item {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  scroll-snap-align: center;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 15px;
+  background-color: var(--det2);
+  color: var(--det0);
+  text-align: center;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.agenda-item .jour {
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-transform: capitalize;
+}
+
+.agenda-item .date {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.agenda-item .desc {
+  font-style: italic;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.agenda-item .heure {
+  font-size: 0.9rem;
+  color: rgba(233, 229, 217, 0.8);
+}
+
+.agenda-item.aucun {
+  background-color: rgba(100, 100, 100, 0.4);
+}
+
+.agenda-item.active {
+  background-color: var(--det4);
+  transform: scale(1.03);
+}
+
+.agenda-item:hover {
+  background-color: var(--det3);
+}
+
+.agenda-item.passe {
+  opacity: 0.6;
+}
+
+.agenda-fade {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---------------------------- ADMIN ------------------------- */
+
+.add-rdv-btn {
+  width: 80%;
+  background-color: var(--det2);
+  color: var(--det0);
+  padding: 12px 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+  z-index: 10;
+}
+.add-rdv-btn:hover {
+  background-color: var(--det3);
+}
+
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.3); /* un peu de fondu noir */
+  backdrop-filter: blur(5px); /* effet de flou */
+  display: none; /* masqué par défaut */
+}
+
+.popup {
+  background: var(--det0);
+  color: var(--text);
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.popup h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.popup form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup form input {
+  border: 1px solid var(--det4);
+}
+
+.popup form button {
+  border: none;
+}
+
+.popup form input,
+.popup form button {
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.popup form button[type="submit"] {
+  background: var(--det3);
+  color: var(--det0);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popup form button[type="submit"]:hover {
+  background: var(--det4);
+}
+
+.popup form button[type="button"] {
+  background: #aaa;
+  color: white;
+  cursor: pointer;
+}
+
+.popup form button[type="button"]:hover {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+button.danger {
+  background-color: rgba(255, 0, 0, 0.3) !important;
+  color: red !important;
+  margin-top: 10px;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+}
+
+button.danger:hover {
+  background-color: red !important;
+  color: white !important;
+}
+
+#closeEditPopup {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 10px;
+  border: 1px solid var(--det4);
+}
+
+#closeEditPopup:hover {
+  background-color: rgb(211, 211, 211);
+}
+
+.btn_mobile {
+  display: none;
+}
+
+/* ======================= Mobile L ======================= */
+
+@media screen and (max-width: 950px) {
+  .texte_agenda {
+    display: none;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn_mobile {
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .agenda-list {
+    width: 100%;
+    height: 60vh;
+  }
+
+  .agenda-item .jour {
+    display: none;
+  }
+
+  .agenda-item .date {
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+
+  .agenda-item .desc {
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+
+  .agenda-item .heure {
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+
+  footer {
+    margin-top: 100px;
+  }
+}
+
+@media (min-width: 1500px) {
+  #fleche_agenda {
+    display: none;
+  }
+}

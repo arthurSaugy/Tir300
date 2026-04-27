@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block title %}Résultats - Tir300 - Villeneuve{%
+endblock %} {% block head %}
+<link rel="stylesheet" href="../static/css/resultats.css" />
+{% endblock %} {% block meta %}
+<meta
+  name="description"
+  content="Résultats officiels des concours et compétitions du stand de tir 300 mètres de Villeneuve FR. Documents à télécharger."
+/>
+{% endblock %} {% block content %}
+<main>
+  <img
+    class="protect"
+    id="fleche_res1"
+    src="../static/assets/svg/fleche_res1.svg"
+    alt=""
+  />
+  <div class="res">
+    <h1>Résultats des Tirs :</h1>
+    <p class="secondary_text">
+      Ici, vous pouvez <strong>consulter</strong> et/ou
+      <strong>télécharger</strong> les résultats en cliquant dessus.
+    </p>
+    <ul>
+      {% for r in resultats %}
+      <li>
+        <a
+          href="{{ url_for('static', filename=r.fichier_pdf) }}"
+          target="_blank"
+        >
+          <div class="infos_res">
+            <p class="date_res">{{ r.date.strftime('%Y-%m-%d') }}</p>
+            <p class="trait_res">-</p>
+            <p class="titre_res">{{ r.titre }}</p>
+          </div>
+          <p class="voir_pdf">Voir PDF</p>
+        </a>
+      </li>
+      {% else %}
+      <li class="aucun protect">Aucun résultat disponible pour l'instant.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</main>
+{% endblock %}

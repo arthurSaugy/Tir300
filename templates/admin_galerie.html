@@ -1,0 +1,122 @@
+{% extends 'admin_base.html' %} {% block title %}Admin - Galerie{% endblock %}
+{% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/galerie.css') }}"
+/>
+
+{% endblock %} {% block content %}
+<main class="admin-page">
+  <h1>Galerie - ADMIN</h1>
+  <p>
+    Pour <strong>modifier</strong> ou <strong>supprimer</strong> une photo,
+    <u><i>cliquez</i></u> dessus. <br />
+    Pour en <strong>ajouter</strong> une, cliquez sur le <u><i>bouton</i></u> en
+    bas de la page.
+  </p>
+  <div class="box_list">
+    {% for photo in photos %}
+    <div
+      class="item"
+      data-id="{{ photo.id }}"
+      data-description="{{ photo.description }}"
+    >
+      <div class="texte">
+        <h2>{{ '%02d'|format(loop.index) }}</h2>
+        <h3>{{ photo.description }}</h3>
+      </div>
+
+      <!-- Desktop -->
+      <img
+        class="desktop"
+        src="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+        alt=""
+      />
+
+      <!-- Mobile -->
+      <div class="image-wrapper mobile">
+        <img
+          src="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+          alt=""
+        />
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Bouton ajouter une photo -->
+    <div class="item add-item">
+      <button id="btn-ajouter">+ Ajouter une photo</button>
+    </div>
+  </div>
+</main>
+
+<!-- Modal d’ajout -->
+<div class="modal" id="modal-ajout">
+  <div class="modal-content">
+    <span class="close-modal" id="fermer-modal">&times;</span>
+    <h2>Ajouter une photo</h2>
+    <form
+      action="{{ url_for('ajouter_photo') }}"
+      method="post"
+      enctype="multipart/form-data"
+      autocomplete="off"
+    >
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        required
+      />
+      <input type="file" name="image" accept="image/*" required />
+      <button class="modifier_btn" type="submit">Ajouter</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal d’édition -->
+<div id="editModal" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <form
+      id="editForm"
+      method="POST"
+      action="{{ url_for('edit_photo') }}"
+      enctype="multipart/form-data"
+      autocomplete="off"
+    >
+      <input type="hidden" name="id" id="photoId" />
+
+      <label>Description :</label>
+      <input type="text" name="description" id="photoDescription" />
+
+      <label>Photo actuelle :</label><br />
+      <img
+        id="currentImagePreview"
+        src=""
+        alt="Aperçu de la photo"
+        style="
+          max-width: 100%;
+          max-height: 200px;
+          display: block;
+          margin-bottom: 10px;
+        "
+      />
+
+      <label>Changer la photo :</label>
+      <input type="file" name="image" accept="image/*" />
+
+      <button class="modifier_btn" type="submit">Modifier</button>
+      <button
+        class="delete-resultat-form supprimer_btn"
+        type="button"
+        id="deleteBtn"
+      >
+        Supprimer
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="../static/js/galerie.js"></script>
+{% endblock %}

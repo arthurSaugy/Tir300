@@ -1,0 +1,59 @@
+{% extends 'base.html' %}{% block title %}Galerie - Tir300 - Villeneuve{%
+endblock %} {% block head %}
+<link rel="stylesheet" href="../static/css/galerie.css" />{% endblock %} {%
+block meta %}
+<meta
+  name="description"
+  content="Photos et souvenirs des compétitions, entraînements et événements du stand de tir 300m de Villeneuve (Fribourg)."
+/>
+{% endblock %} {% block content %}
+<main>
+  <h1>Galerie</h1>
+  <p class="text_adm">
+    <i><u>Survolez</u></i> une ligne pour
+    <strong>afficher un aperçu de l'image</strong> ou
+
+    <i><u>cliquez</u></i> dessus pour la <strong>voir en plein écran</strong>.
+  </p>
+  <div class="box_list protect">
+    {% for photo in photos %}
+    <div class="item">
+      <div class="texte">
+        <h2>{{ '%02d'|format(loop.index) }}</h2>
+        <h3>{{ photo.description }}</h3>
+      </div>
+
+      <!-- Desktop -->
+      <img
+        class="desktop"
+        src="{{ url_for('static', filename='uploads/galerie/' + photo.filename.rsplit('.', 1)[0] + '-preview.webp') }}"
+        data-full="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+
+      <!-- Mobile -->
+      <div class="image-wrapper mobile">
+        <img
+          src="{{ url_for('static', filename='uploads/galerie/' + photo.filename.rsplit('.', 1)[0] + '-preview.webp') }}"
+          data-full="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</main>
+
+<!-- Fenêtre de zoom -->
+<div class="lightbox protect" id="lightbox" style="display: none">
+  <span class="close" id="lightbox-close">&times;</span>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Image agrandie" />
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="../static/js/galerie.js"></script>
+{% endblock %}

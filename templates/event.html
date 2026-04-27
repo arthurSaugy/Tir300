@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% block title %}Évènements - Tir300 - Villeneuve{%
+endblock %}{% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/event.css') }}"
+/>
+{% endblock %} {% block meta %}
+<meta
+  name="description"
+  content="Flyers et annonces des événements organisés par le stand de tir 300m de Villeneuve (FR). Journées spéciales, concours, manifestations."
+/>
+{% endblock %} {% block content %}
+<div class="lightbox protect" id="lightbox">
+  <span class="close" id="lightbox-close">&times;</span>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Image zoomée" />
+</div>
+
+<main>
+  <div class="boxs protect">
+    <div class="box1 box">
+      {% if flyer1 %}
+      <img
+        src="{{ url_for('static', filename='event_images/' + flyer1.filename) }}"
+        alt="Flyer 1"
+        class="zoomable"
+      />
+      {% else %}
+      <p>Aucun flyer disponible</p>
+      {% endif %}
+    </div>
+    <div class="box2 box">
+      {% if flyer2 %}
+      <img
+        src="{{ url_for('static', filename='event_images/' + flyer2.filename) }}"
+        alt="Flyer 2"
+        class="zoomable"
+      />
+      {% else %}
+      <img
+        src="{{ url_for('static', filename='event_images/default_placeholder.jpg') }}"
+        alt="Placeholder"
+      />
+      {% endif %}
+    </div>
+    <div class="box3 box">
+      <h3>Prochains évènements à venir ...</h3>
+    </div>
+  </div>
+</main>
+{% endblock %} {% block scripts %}
+<script>
+  /* ========================= Zoom appuis sur Flyer =========================== */
+
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxClose = document.getElementById("lightbox-close");
+
+  document.querySelectorAll(".zoomable").forEach((img) => {
+    img.addEventListener("click", () => {
+      lightbox.style.display = "flex";
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+    });
+  });
+
+  lightboxClose.addEventListener("click", () => {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+  });
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      lightbox.style.display = "none";
+      lightboxImg.src = "";
+    }
+  });
+</script>
+{% endblock %}

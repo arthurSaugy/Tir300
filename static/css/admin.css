@@ -1,0 +1,195 @@
+.res {
+  margin: 30vh 0 200px 5%;
+}
+
+.bloc_haut {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 95%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--det3);
+  font-size: 1rem;
+  background-color: white;
+}
+
+.input-file {
+  display: none;
+}
+
+.custom-file-label {
+  display: inline-block;
+  background-color: var(--det2);
+  color: var(--det0);
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  margin-top: 8px;
+}
+
+.custom-file-label:hover {
+  background-color: var(--det3);
+}
+
+#filename {
+  display: block;
+  margin-top: 5px;
+  color: var(--text2);
+  font-style: italic;
+}
+
+form button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--det3);
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  float: right;
+}
+
+form button:hover {
+  background-color: var(--det3);
+  color: var(--det0);
+}
+
+.res ul li {
+  width: 75%;
+}
+
+.delete-btn {
+  color: red;
+  background-color: rgb(255, 0, 0, 0.2);
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.delete-btn:hover {
+  color: var(--det0);
+  background-color: rgb(255, 0, 0, 0.8);
+}
+
+.res ul .aucun {
+  width: 95%;
+}
+
+.box_li_button {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-form {
+  background-color: var(--det0);
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+}
+
+#openFormBtn {
+  padding: 12px 25px;
+  border-radius: 10px;
+  background-color: var(--det2);
+  border: none;
+  color: var(--det0);
+  font-weight: bold;
+  font-size: 3rem;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+#openFormBtn:hover {
+  background-color: var(--det3);
+}
+
+/* MODAL DE SUPPRESSION GLOBALE */
+
+.modal-form h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.5rem;
+}
+
+#cancelDeleteBtn,
+#confirmDeleteBtn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  float: right;
+  border: none;
+  margin-top: 20px;
+}
+
+#cancelDeleteBtn {
+  background-color: rgba(128, 128, 128, 0.325);
+  margin-right: 10px;
+}
+
+#cancelDeleteBtn:hover {
+  background-color: rgb(55, 55, 55);
+  color: var(--det0);
+}
+
+#confirmDeleteBtn {
+  background-color: rgba(255, 0, 0, 0.175);
+  color: red;
+}
+
+#confirmDeleteBtn:hover {
+  background-color: red;
+  color: var(--det0);
+}

@@ -1,0 +1,115 @@
+{% extends 'admin_base.html' %} {% block title %}Admin Résultats{% endblock %}
+{% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/resultats.css') }}"
+/>
+
+{% endblock %} {% block content %}
+<main>
+  <img
+    id="fleche_res1"
+    src="{{ url_for('static', filename='assets/svg/fleche_res1.svg') }}"
+    alt=""
+  />
+
+  <div class="res">
+    <div class="bloc_haut">
+      <div>
+        <h1>Résultats des Tirs - Admin</h1>
+        <p>
+          Ici, vous pouvez <strong>ajouter</strong> ou
+          <strong>supprimer</strong> des résultats.
+        </p>
+      </div>
+      <button id="openFormBtn">+</button>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
+    <p
+      style="color: {% if category == 'danger' %}red{% elif category == 'success' %}green{% else %}black{% endif %};"
+    >
+      {{ message }}
+    </p>
+    {% endfor %} {% endif %} {% endwith %}
+
+    <h2 class="res_enre">Résultats enregistrés</h2>
+    <ul>
+      {% for r in resultats %}
+      <div class="box_li_button">
+        <li style="width: 80%">
+          <a
+            href="{{ url_for('static', filename=r.fichier_pdf) }}"
+            target="_blank"
+          >
+            <div class="infos_res">
+              <p class="date_res">{{ r.date.strftime('%Y-%m-%d') }}</p>
+              <p class="trait_res">-</p>
+              <p class="titre_res">{{ r.titre }}</p>
+            </div>
+            <p class="voir_pdf">Voir PDF</p>
+          </a>
+        </li>
+
+        <form
+          method="POST"
+          action="{{ url_for('delete_resultat', id=r.id) }}"
+          class="delete-resultat-form"
+        >
+          {{ delete_form.csrf_token }}
+          <button type="submit" class="delete-btn">Supprimer</button>
+        </form>
+      </div>
+      {% else %}
+      <li class="aucun">Aucun résultat enregistré.</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- MODALE AJOUT -->
+  <div id="addModal" class="modal-overlay">
+    <div class="modal-form">
+      <button id="closeAddModal" class="close-btn">✕</button>
+      <h2>Ajouter un nouveau résultat</h2>
+      <form method="POST" enctype="multipart/form-data" autocomplete="off">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.titre.label }} {{ form.titre(class="form-control") }} {% for
+          error in form.titre.errors %}
+          <span style="color: red">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.date.label }} {{ form.date(class="form-control") }} {% for
+          error in form.date.errors %}
+          <span style="color: red">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.fichier_pdf.label }} {{ form.fichier_pdf(class="input-file",
+          id="pdfInput") }}
+          <label for="pdfInput" class="custom-file-label"
+            >Choisir un fichier PDF</label
+          >
+          <span id="filename">Aucun fichier choisi</span>
+          {% for error in form.fichier_pdf.errors %}
+          <span style="color: red">{{ error }}</span>
+          {% endfor %}
+        </div>
+
+        <button type="submit">Ajouter</button>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %} {% block scripts %}
+<script src="../static/js/resultats.js"></script>
+{% endblock %}

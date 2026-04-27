@@ -1,0 +1,121 @@
+.custom-cursor {
+  pointer-events: none !important;
+  z-index: 9999;
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  transform-origin: 0 0;
+  mix-blend-mode: normal;
+  transition: transform 0.2s ease;
+  fill: black;
+}
+
+.custom-cursor.pointer {
+  transform: rotate(45deg);
+}
+
+.custom-cursor.click {
+  animation: click-bounce 0.3s ease;
+}
+
+.custom-cursor.force-white path {
+  fill: white;
+  mix-blend-mode: normal;
+}
+
+@keyframes click-bounce {
+  0% {
+    transform: scale(1) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: scale(1.3) rotate(var(--rotation, 0deg));
+  }
+  100% {
+    transform: scale(1) rotate(var(--rotation, 0deg));
+  }
+}
+
+.cursor-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(
+    to bottom right,
+    #a3b18a 0%,
+    #588157 30%,
+    #3a5a40 65%,
+    #344e41 100%
+  );
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cursor-toggle img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.curseur_perso_img {
+  width: 60% !important;
+  height: 60% !important;
+  object-fit: contain;
+}
+
+.cursor-toggle:hover {
+  background: linear-gradient(
+    to bottom left,
+    #a3b18a 0%,
+    #588157 30%,
+    #3a5a40 65%,
+    #344e41 100%
+  );
+}
+
+body.custom-cursor-active,
+body.custom-cursor-active *,
+body.custom-cursor-active *::before,
+body.custom-cursor-active *::after {
+  cursor: none !important;
+  caret-color: transparent !important;
+}
+
+body.custom-cursor-active input,
+body.custom-cursor-active textarea,
+body.custom-cursor-active button,
+body.custom-cursor-active select,
+body.custom-cursor-active canvas {
+  caret-color: transparent !important; /* déjà couvert pour cursor */
+}
+
+/* =============== RESPONSIVE */
+
+@media (max-width: 910px) {
+  .custom-cursor {
+    display: none;
+  }
+  .cursor-toggle {
+    display: none;
+  }
+
+  body.custom-cursor-active,
+  body.custom-cursor-active *,
+  body.custom-cursor-active *::before,
+  body.custom-cursor-active *::after {
+    cursor: auto !important;
+    caret-color: auto !important;
+  }
+
+  body.custom-cursor-active input,
+  body.custom-cursor-active textarea,
+  body.custom-cursor-active button,
+  body.custom-cursor-active select,
+  body.custom-cursor-active canvas {
+    caret-color: auto !important; /* déjà couvert pour cursor */
+  }
+}

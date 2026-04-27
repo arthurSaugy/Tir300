@@ -1,0 +1,4 @@
+Contact: mailto:mottets.tirvilleneuve@hotmail.com
+Preferred-Languages: fr, en
+Canonical: https://www.tir300villeneuvefr.ch/security.txt
+Expires: 2027-03-30T00:00:00.000Z

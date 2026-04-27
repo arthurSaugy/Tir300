@@ -1,0 +1,124 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.login {
+  padding: 30px;
+  border-radius: 30px;
+  background-color: var(--det0);
+  box-shadow: 0 0 50px 5px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+form input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--det2);
+  margin-bottom: 20px;
+}
+
+form button {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--det2);
+  color: var(--det0);
+  border: none;
+}
+
+form button:hover {
+  background-color: var(--det4);
+}
+
+.login h1 {
+  margin: 0 0 20px 0;
+  padding: 0;
+}
+
+footer {
+  display: none;
+}
+
+/* ======================= oeil ============================ */
+
+.password-field {
+  position: relative;
+  width: 100%;
+  max-width: 300px; /* ou comme tu veux */
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 40px; /* espace pour l’œil */
+  box-sizing: border-box;
+}
+
+#toggle-password {
+  background: transparent;
+  border: none;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 33%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+#toggle-password svg {
+  width: 24px;
+  height: 24px;
+  color: #666666b0;
+  pointer-events: none; /* évite les bugs de clic */
+}
+
+/* ======================= Responsive ============================ */
+
+@media (max-width: 430px) {
+  .login {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 380px) {
+  .login {
+    transform: scale(0.8);
+  }
+
+  .login h1 {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 330px) {
+  .login {
+    transform: scale(0.8);
+  }
+
+  .login h1 {
+    font-size: 1.5rem;
+  }
+}

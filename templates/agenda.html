@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block title %}Agenda - Tir300 - Villeneuve{%
+endblock %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/agenda.css') }}"
+/>
+{% endblock %} {% block meta %}
+<meta
+  name="description"
+  content="Consultez l'agenda des entraînements et compétitions du stand de tir 300m de Villeneuve FR. Calendrier à jour."
+/>
+{% endblock %} {% block content %}
+<main>
+  <div class="texte_agenda" style="max-width: 33vw">
+    <div class="texte_haut_droite">
+      <h1>Agenda</h1>
+      <p>
+        <span id="prochains">Nos prochains</span>
+        <span id="rdv">tirs</span>
+      </p>
+    </div>
+    <img
+      class="protect"
+      id="fleche_agenda"
+      src="../static/assets/svg/fleche_agenda.svg"
+      alt=""
+    />
+    <p id="texte_bas_agenda" class="secondary_text">
+      <strong
+        ><span id="texte_bienvenue"
+          >Bienvenue dans notre calendrier !</span
+        ></strong
+      >
+      <br /><br />
+      Ici, vous pourrez <strong>consulter</strong> la liste de nos nos prochains
+      <strong>tirs obligatoires</strong> et <strong>entraînements</strong> ainsi
+      que tous les évènements à <strong>venir</strong>.
+    </p>
+  </div>
+
+  <!-- Liste verticale -->
+  <ul class="agenda-list">
+    {% for item in agenda_entries %}
+    <li
+      class="agenda-item"
+      data-date="{{ item.date }}"
+      data-end="{{ item.date.isoformat() }}T{{ item.heure_fin.strftime('%H:%M') }}"
+    >
+      <div class="jour">{{ item.date.strftime('%A') }}</div>
+      <div class="date">{{ item.date.strftime('%d.%m') }}</div>
+      <div class="desc">{{ item.description }}</div>
+      <div class="heure">
+        {{ item.heure_debut.strftime('%Hh%M') }} à {{
+        item.heure_fin.strftime('%Hh%M') }}
+      </div>
+    </li>
+    {% else %}
+    <li class="agenda-item aucun">Aucun événement prévu</li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %} {% block scripts %}
+<script src="../static/js/agenda.js"></script>
+{% endblock %}

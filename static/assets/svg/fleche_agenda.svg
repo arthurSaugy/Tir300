@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200mm"
+   height="250mm"
+   viewBox="0 0 200 250"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="fleche_agenda.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.27794613"
+     inkscape:cx="726.75954"
+     inkscape:cy="107.93459"
+     inkscape:window-width="1368"
+     inkscape:window-height="842"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       d="m 183.68857,209.56603 c -1.99106,-6.76591 -8.71109,-9.27154 -14.50168,-12.18763 -9.84239,-4.95738 -19.68494,-9.91483 -29.52742,-14.87218 -7.04401,-3.54797 -18.10737,9.41534 -10.2006,13.39899 2.89049,1.45716 24.59986,11.19913 34.30405,16.85928 C 121.03636,212.70025 82.549906,187.73441 58.680916,152.87419 30.780508,112.12417 27.70495,58.595626 37.067954,11.547153 36.99562,11.911169 21.086569,11.534631 20.34533,15.257997 10.109333,66.697831 15.801333,121.48708 47.642807,164.57652 c 26.012311,35.20254 69.146963,55.37476 112.639983,52.28008 0.8525,-0.0617 3.40249,-0.68487 6.03436,-1.44438 -7.25702,5.26173 -15.246,9.51935 -22.4159,14.94752 -8.54588,6.46944 -0.19477,15.55585 8.16573,9.22772 7.89935,-5.98007 35.57951,-16.58166 31.6217,-30.02114 z"
+       id="path24"
+       style="stroke-width:2.70662" />
+  </g>
+</svg>

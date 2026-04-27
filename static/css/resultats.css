@@ -1,0 +1,269 @@
+main {
+  margin: 5vh 3% 0 3%;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#fleche_res1 {
+  position: absolute;
+  left: 6%;
+  top: 10%;
+  height: 300px;
+  width: auto;
+  rotate: -20deg;
+}
+
+.res {
+  background-color: var(--det0);
+  width: 50vw;
+  margin-top: 35vh;
+  border-radius: 30px;
+  padding: 30px;
+  box-shadow: 0px -5px 100px 10px rgb(0, 0, 0, 0.1);
+}
+
+.res h1 {
+  font-size: 2.5rem;
+  margin: 0 0 10px 0;
+}
+
+.res h1 + p {
+  margin: 0 0 30px 0;
+}
+
+.res ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.res ul li {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.res ul li a {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--det0);
+  background-color: var(--det2);
+  margin: 0;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s ease;
+}
+
+.res ul li a:hover {
+  background-color: var(--det3);
+}
+
+.res ul li p {
+  margin: 0;
+  padding: 0;
+}
+
+.res ul li .infos_res {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+}
+
+.res ul li .infos_res .date_res {
+  color: rgba(233, 229, 217, 0.8);
+}
+
+.res ul li .infos_res .trait_res {
+  margin-left: 15px;
+}
+
+.res ul li .infos_res .titre_res {
+  margin-left: 15px;
+}
+
+.res ul li .voir_pdf {
+  margin-left: 15px;
+  font-size: 0.8rem;
+}
+
+.res ul .aucun {
+  background-color: rgba(88, 129, 87, 0.6);
+  text-align: center;
+
+  width: 95%;
+  margin: 0;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+footer {
+  margin-top: 40vh;
+}
+
+/* ============================= MEDIA QUERIES =================================== */
+
+@media (max-width: 1200px) {
+  #fleche_res1 {
+    top: 20%;
+    height: 200px;
+  }
+}
+
+@media (max-width: 950px) {
+  .res {
+    width: 50vw;
+    margin-top: 35vh;
+    border-radius: 30px;
+    padding: 30px;
+  }
+
+  .res h1 {
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+  }
+
+  .res h1 + p {
+    font-size: 0.8rem;
+    margin: 0 0 30px 0;
+  }
+
+  .res ul li a {
+    font-size: 1rem;
+  }
+
+  .res ul li .voir_pdf {
+    font-size: 0.7rem;
+  }
+
+  .res ul .aucun {
+    font-size: 0.8rem;
+  }
+
+  #fleche_res1 {
+    top: 20%;
+    height: 200px;
+  }
+}
+
+@media (max-width: 800px) {
+  .res h1 {
+    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+  }
+
+  #fleche_res1 {
+    top: 23%;
+    height: 170px;
+  }
+}
+
+/* ============================= Mobile view =================================== */
+@media (max-width: 600px) {
+  .res {
+    width: 90vw;
+    margin-top: 10vh;
+    border-radius: 10px;
+    padding: 30px;
+    margin-right: 2vw;
+  }
+
+  .res h1 {
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+  }
+
+  .res h1 + p {
+    font-size: 0.8rem;
+    margin: 0 0 30px 0;
+  }
+
+  .res ul li a {
+    font-size: 1rem;
+  }
+
+  .res ul li .voir_pdf {
+    font-size: 0.7rem;
+  }
+
+  .res ul .aucun {
+    font-size: 0.8rem;
+  }
+
+  #fleche_res1 {
+    display: none;
+  }
+
+  #openFormBtn {
+    height: 80px;
+    width: 100px;
+  }
+
+  .delete-btn {
+    padding: 10px 5px;
+    margin-left: 5px;
+    font-size: 0.7rem;
+  }
+
+  .res_enre {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .res {
+    width: 90vw;
+    margin-top: 10vh;
+    border-radius: 10px;
+    padding: 30px;
+  }
+
+  .res h1 {
+    font-size: 1.45rem;
+    margin: 0 0 10px 0;
+  }
+
+  .res h1 + p {
+    font-size: 0.65rem;
+    margin: 0 0 30px 0;
+  }
+
+  .res ul li a {
+    font-size: 0.85rem;
+  }
+
+  .res ul li .voir_pdf {
+    font-size: 0.5rem;
+  }
+
+  .res ul .aucun {
+    font-size: 0.65rem;
+  }
+
+  footer {
+    margin-top: 400px;
+  }
+
+  #fleche_res1 {
+    display: none;
+  }
+}

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://www.tir300villeneuvefr.ch/sitemap.xml
