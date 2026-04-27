@@ -5,9 +5,4 @@ __pycache__/
 .venv/
 venv/
 instance/
-static/resultats_pdfs/
-static/uploads/galerie/
-!static/uploads/
-!static/uploads/galerie/
-!static/uploads/galerie/*-preview.webp
-static/event_images/
+.git.backup/
