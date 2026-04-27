@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from forms import ResultatForm, DummyForm, RdvForm
 from models import db, Resultat, AgendaEntry, EventFlyer, GaleriePhoto
 from datetime import datetime, timedelta
+import storage
 
 # Charge les variables d'environnement depuis .env (en local).
 # En production sur Render, les variables sont fournies par la plateforme.
@@ -56,21 +57,18 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'une-cle-secrete-tres-secrete')
 app.config['SQLALCHEMY_DATABASE_URI'] = get_database_uri()
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static', 'resultats_pdfs')
-app.config['UPLOAD_FOLDER_GALERIE'] = os.path.join('static', 'uploads', 'galerie')
-
-# Dossier pour les images d’événements
-EVENT_UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'event_images')
-os.makedirs(EVENT_UPLOAD_FOLDER, exist_ok=True)
-app.config['EVENT_UPLOAD_FOLDER'] = EVENT_UPLOAD_FOLDER
 
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
     supprimer_anciens_rdv()
-    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-    os.makedirs(app.config['UPLOAD_FOLDER_GALERIE'], exist_ok=True)
+
+
+# Expose storage.public_url comme fonction Jinja `r2_url` dans tous les templates.
+@app.context_processor
+def _inject_r2_url():
+    return {'r2_url': storage.public_url}
 
 # ================== MDP ========================
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
@@ -164,6 +162,36 @@ def admin_logout():
 
 # ============ Evenement Admin
 
+def _replace_flyer(position: str, file_field: str, current_flyer):
+    """
+    Helper interne : remplace (ou cree) un flyer pour la position donnee
+    via le fichier soumis dans le champ `file_field`. Stocke dans R2 sous
+    la cle 'event_images/<filename>'.
+    """
+    if file_field not in request.files:
+        return current_flyer
+    f = request.files[file_field]
+    if not f or f.filename == '':
+        return current_flyer
+
+    filename = secure_filename(f.filename)
+    new_key = f'event_images/{filename}'
+
+    # Supprime l'ancien flyer dans R2 si different.
+    if current_flyer and current_flyer.filename and current_flyer.filename != filename:
+        storage.delete_object(f'event_images/{current_flyer.filename}')
+
+    # Uploade le nouveau flyer.
+    storage.upload_fileobj(f.stream, new_key, content_type=f.mimetype)
+
+    if current_flyer:
+        current_flyer.filename = filename
+    else:
+        current_flyer = EventFlyer(position=position, filename=filename)
+        db.session.add(current_flyer)
+    return current_flyer
+
+
 @app.route('/admin_events', methods=['GET', 'POST'])
 @admin_required
 def admin_events():
@@ -171,50 +199,8 @@ def admin_events():
     flyer2 = EventFlyer.query.filter_by(position='box2').first()
 
     if request.method == 'POST':
-        # Upload pour box1
-        if 'flyer1_file' in request.files:
-            file1 = request.files['flyer1_file']
-            if file1 and file1.filename != '':
-                filename1 = secure_filename(file1.filename)
-                file1_path = os.path.join(app.static_folder, 'event_images', filename1)
-
-                # Supprimer l'ancien flyer s'il existe
-                if flyer1 and flyer1.filename:
-                    old_file1_path = os.path.join(app.static_folder, 'event_images', flyer1.filename)
-                    if os.path.exists(old_file1_path):
-                        os.remove(old_file1_path)
-
-                # Sauvegarder le nouveau
-                file1.save(file1_path)
-
-                if flyer1:
-                    flyer1.filename = filename1
-                else:
-                    flyer1 = EventFlyer(position='box1', filename=filename1)
-                    db.session.add(flyer1)
-
-        # Upload pour box2
-        if 'flyer2_file' in request.files:
-            file2 = request.files['flyer2_file']
-            if file2 and file2.filename != '':
-                filename2 = secure_filename(file2.filename)
-                file2_path = os.path.join(app.static_folder, 'event_images', filename2)
-
-                # Supprimer l'ancien flyer s'il existe
-                if flyer2 and flyer2.filename:
-                    old_file2_path = os.path.join(app.static_folder, 'event_images', flyer2.filename)
-                    if os.path.exists(old_file2_path):
-                        os.remove(old_file2_path)
-
-                # Sauvegarder le nouveau
-                file2.save(file2_path)
-
-                if flyer2:
-                    flyer2.filename = filename2
-                else:
-                    flyer2 = EventFlyer(position='box2', filename=filename2)
-                    db.session.add(flyer2)
-
+        flyer1 = _replace_flyer('box1', 'flyer1_file', flyer1)
+        flyer2 = _replace_flyer('box2', 'flyer2_file', flyer2)
         db.session.commit()
         flash("Flyers mis à jour.")
         return redirect(url_for('admin_events'))
@@ -292,13 +278,15 @@ def admin_resultats():
     if form.validate_on_submit():
         f = form.fichier_pdf.data
         filename = secure_filename(f.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        f.save(filepath)
+        key = f"resultats_pdfs/{filename}"
+
+        # Uploade le PDF vers R2.
+        storage.upload_fileobj(f.stream, key, content_type='application/pdf')
 
         nouveau_resultat = Resultat(
             titre=form.titre.data,
             date=form.date.data,
-            fichier_pdf=f"resultats_pdfs/{filename}"
+            fichier_pdf=key  # on stocke la cle R2 complete (compatible avec l'ancien format)
         )
         db.session.add(nouveau_resultat)
         db.session.commit()
@@ -313,15 +301,12 @@ def admin_resultats():
 @admin_required
 def delete_resultat(id):
     resultat = Resultat.query.get_or_404(id)
-    try:
-        # Supprimer le fichier PDF du disque
-        filepath = os.path.join(app.root_path, 'static', resultat.fichier_pdf)
-        if os.path.exists(filepath):
-            os.remove(filepath)
-    except Exception as e:
-        print(f"Erreur suppression fichier : {e}")
 
-    # Supprimer de la BDD
+    # Supprime le PDF dans R2.
+    if resultat.fichier_pdf:
+        storage.delete_object(resultat.fichier_pdf)
+
+    # Supprime de la BDD
     db.session.delete(resultat)
     db.session.commit()
     flash("Résultat supprimé avec succès.", "success")
@@ -336,14 +321,52 @@ def admin_galerie():
     return render_template('admin_galerie.html', photos=photos)
 
 
+def _upload_galerie_photo(image_file) -> str:
+    """
+    Helper interne : uploade l'image originale + un preview WebP genere
+    automatiquement vers R2. Retourne le filename securise.
+    """
+    filename = secure_filename(image_file.filename)
+    image_bytes = image_file.read()
+
+    # Image originale (full)
+    storage.upload_bytes(
+        image_bytes,
+        f'galerie/{filename}',
+        content_type=image_file.mimetype,
+    )
+
+    # Preview WebP genere a la volee
+    try:
+        preview_bytes = storage.make_preview(image_bytes)
+        storage.upload_bytes(
+            preview_bytes,
+            storage.preview_key_for(filename, prefix='galerie'),
+            content_type='image/webp',
+        )
+    except Exception as e:
+        # Si la generation du preview echoue, on log mais on n'echoue pas
+        # l'upload : la galerie tombera en fallback sur l'image originale.
+        print(f"[galerie] generation preview echouee pour {filename}: {e}")
+
+    return filename
+
+
+def _delete_galerie_photo(filename: str) -> None:
+    """Supprime image originale + preview de R2."""
+    if not filename:
+        return
+    storage.delete_object(f'galerie/{filename}')
+    storage.delete_object(storage.preview_key_for(filename, prefix='galerie'))
+
+
 @app.route('/admin_galerie/ajouter', methods=['POST'])
 @admin_required
 def ajouter_photo():
     image = request.files.get('image')
     description = request.form.get('description')
     if image and description:
-        filename = secure_filename(image.filename)
-        image.save(os.path.join(app.config['UPLOAD_FOLDER_GALERIE'], filename))
+        filename = _upload_galerie_photo(image)
         nouvelle_photo = GaleriePhoto(description=description, filename=filename)
         db.session.add(nouvelle_photo)
         db.session.commit()
@@ -361,18 +384,11 @@ def edit_photo():
     if photo:
         photo.description = new_description
 
-        if image:
-            filename = secure_filename(image.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER_GALERIE'], filename)
-            
-            # Supprimer l'ancienne image si elle existe
-            old_path = os.path.join(app.config['UPLOAD_FOLDER_GALERIE'], photo.filename)
-            if os.path.exists(old_path):
-                os.remove(old_path)
-            
-            # Sauvegarder la nouvelle image
-            image.save(image_path)
-            photo.filename = filename
+        if image and image.filename:
+            # Supprime ancienne image + preview dans R2.
+            _delete_galerie_photo(photo.filename)
+            # Uploade la nouvelle image + preview.
+            photo.filename = _upload_galerie_photo(image)
 
         db.session.commit()
     return redirect(url_for('admin_galerie'))
@@ -384,9 +400,7 @@ def edit_photo():
 def delete_photo(photo_id):
     photo = GaleriePhoto.query.get(photo_id)
     if photo:
-        path = os.path.join(app.config['UPLOAD_FOLDER_GALERIE'], photo.filename)
-        if os.path.exists(path):
-            os.remove(path)
+        _delete_galerie_photo(photo.filename)
         db.session.delete(photo)
         db.session.commit()
     return redirect(url_for('admin_galerie'))

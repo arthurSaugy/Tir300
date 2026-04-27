@@ -24,7 +24,7 @@ endblock %} {% block head %}
       {% for r in resultats %}
       <li>
         <a
-          href="{{ url_for('static', filename=r.fichier_pdf) }}"
+          href="{{ r2_url(r.fichier_pdf) }}"
           target="_blank"
         >
           <div class="infos_res">

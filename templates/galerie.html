@@ -26,8 +26,8 @@ block meta %}
       <!-- Desktop -->
       <img
         class="desktop"
-        src="{{ url_for('static', filename='uploads/galerie/' + photo.filename.rsplit('.', 1)[0] + '-preview.webp') }}"
-        data-full="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+        src="{{ r2_url('galerie/' + photo.filename.rsplit('.', 1)[0] + '-preview.webp') }}"
+        data-full="{{ r2_url('galerie/' + photo.filename) }}"
         alt=""
         loading="lazy"
         decoding="async"
@@ -36,8 +36,8 @@ block meta %}
       <!-- Mobile -->
       <div class="image-wrapper mobile">
         <img
-          src="{{ url_for('static', filename='uploads/galerie/' + photo.filename.rsplit('.', 1)[0] + '-preview.webp') }}"
-          data-full="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+          src="{{ r2_url('galerie/' + photo.filename.rsplit('.', 1)[0] + '-preview.webp') }}"
+          data-full="{{ r2_url('galerie/' + photo.filename) }}"
           alt=""
           loading="lazy"
           decoding="async"

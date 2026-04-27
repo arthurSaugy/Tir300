@@ -20,7 +20,7 @@ endblock %}{% block head %}
     <div class="box1 box">
       {% if flyer1 %}
       <img
-        src="{{ url_for('static', filename='event_images/' + flyer1.filename) }}"
+        src="{{ r2_url('event_images/' + flyer1.filename) }}"
         alt="Flyer 1"
         class="zoomable"
       />
@@ -31,7 +31,7 @@ endblock %}{% block head %}
     <div class="box2 box">
       {% if flyer2 %}
       <img
-        src="{{ url_for('static', filename='event_images/' + flyer2.filename) }}"
+        src="{{ r2_url('event_images/' + flyer2.filename) }}"
         alt="Flyer 2"
         class="zoomable"
       />

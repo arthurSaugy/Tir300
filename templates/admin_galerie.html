@@ -29,14 +29,14 @@
       <!-- Desktop -->
       <img
         class="desktop"
-        src="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+        src="{{ r2_url('galerie/' + photo.filename) }}"
         alt=""
       />
 
       <!-- Mobile -->
       <div class="image-wrapper mobile">
         <img
-          src="{{ url_for('static', filename='uploads/galerie/' + photo.filename) }}"
+          src="{{ r2_url('galerie/' + photo.filename) }}"
           alt=""
         />
       </div>

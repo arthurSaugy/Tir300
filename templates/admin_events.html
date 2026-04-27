@@ -10,7 +10,7 @@
     <div class="box1 box box_adm" onclick="openModal('modalFlyer1')">
       {% if flyer1 %}
       <img
-        src="{{ url_for('static', filename='event_images/' + flyer1.filename) }}"
+        src="{{ r2_url('event_images/' + flyer1.filename) }}"
         alt="Flyer 1"
       />
       {% else %}
@@ -22,7 +22,7 @@
     <div class="box2 box box_adm" onclick="openModal('modalFlyer2')">
       {% if flyer2 %}
       <img
-        src="{{ url_for('static', filename='event_images/' + flyer2.filename) }}"
+        src="{{ r2_url('event_images/' + flyer2.filename) }}"
         alt="Flyer 2"
       />
       {% else %}
